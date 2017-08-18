@@ -11,7 +11,11 @@ Welcome to pyLPD's documentation!
    :caption: Contents:
    
    modules
-.. automodule:: pyLPD   
+
+   .. automodule:: pyLPD   
+
+   .. automodule:: pyLPD.MLtools   
+
 
 
 
