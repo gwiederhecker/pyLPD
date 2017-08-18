@@ -1,5 +1,4 @@
 numpy
 pyvisa
 pandas
-peakutils
 scipy

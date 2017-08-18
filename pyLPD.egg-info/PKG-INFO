@@ -1,13 +1,14 @@
 Metadata-Version: 1.1
 Name: pyLPD
-Version: 0.0.1.1
+Version: 0.0.1.5
 Summary: Python module implemention various functions used at our lab.
 Home-page: https://github.com/gwiederhecker/pyLPD
 Author: Gustavo Wiederhecker
 Author-email: gsw@g.unicamp.br
 License: MIT v1.0
 Description: # pyLPD
-        Package with the python stash used at LPD
+        LPD python stash
+        
         
 Keywords: instrument control,data processing,simulation scripts
 Platform: OS Independent
