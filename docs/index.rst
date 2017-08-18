@@ -12,9 +12,6 @@ Welcome to pyLPD's documentation!
    
    modules
 
-   .. automodule:: pyLPD   
-
-   .. automodule:: pyLPD.MLtools   
 
 
 
