@@ -8,8 +8,12 @@ This is MLtools package from pyLPD. It contains
 
     * functions for doing matlab-like operations
 '''
-
-
+import sys
+from numpy import NaN, Inf, arange, isscalar, asarray, array
+from scipy.interpolate import interp1d
+from math import ceil
+import numpy as np
+from math import factorial    
 import scipy.io as spio
 #****************************************************************************
 def loadmat(filename):
@@ -64,12 +68,7 @@ def _tolist(ndarray):
     return elem_list
 #----------------------------------------------------------------------------
 #****************************************************************************
-import sys
-from numpy import NaN, Inf, arange, isscalar, asarray, array
-from scipy.interpolate import interp1d
-from math import ceil
-import numpy as np
-from math import factorial    
+
 
 def peakdet(v, delta, x = None):
     """
