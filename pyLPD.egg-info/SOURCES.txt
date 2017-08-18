@@ -1,3 +1,4 @@
+setup.cfg
 setup.py
 pyLPD/MLtools.py
 pyLPD/__init__.py

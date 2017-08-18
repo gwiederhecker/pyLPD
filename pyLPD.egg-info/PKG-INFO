@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: pyLPD
-Version: 0.0.1
+Version: 0.0.1.1
 Summary: Python module implemention various functions used at our lab.
 Home-page: https://github.com/gwiederhecker/pyLPD
 Author: Gustavo Wiederhecker
