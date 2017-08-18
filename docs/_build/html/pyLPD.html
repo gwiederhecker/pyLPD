@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyLPD package &#8212; pyLPD 0.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pylpd-package">
+<h1>pyLPD package<a class="headerlink" href="#pylpd-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyLPD.MLtools">
+<span id="pylpd-mltools-module"></span><h2>pyLPD.MLtools module<a class="headerlink" href="#module-pyLPD.MLtools" title="Permalink to this headline">¶</a></h2>
+<p>This is MLtools package from pyLPD. It contains</p>
+<blockquote>
+<div><ul class="simple">
+<li>functions for doing matlab-like operations</li>
+</ul>
+</div></blockquote>
+<dl class="function">
+<dt id="pyLPD.MLtools.envPeak">
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">envPeak</code><span class="sig-paren">(</span><em>x</em>, <em>delta=0.2</em>, <em>smooth=0.05</em>, <em>sg_order=0</em>, <em>interp_kind='slinear'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#envPeak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.envPeak" title="Permalink to this definition">¶</a></dt>
+<dd><p>x: input vector
+delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)
+smooth: Savitzy_Golay smooth double from (0,1)
+sg_order: Savitzy_Golay order, integer
+interp_kind: interpolation kind (&#8216;slinear&#8217;,&#8217;quadratic&#8217;,&#8217;cubic&#8217;), from interp1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyLPD.MLtools.loadmat">
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">loadmat</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#loadmat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.loadmat" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function should be called instead of direct spio.loadmat
+as it cures the problem of not properly recovering python dictionaries
+from mat files. It calls the function check keys to cure all entries
+which are still mat-objects</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyLPD.MLtools.peakdet">
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">peakdet</code><span class="sig-paren">(</span><em>v</em>, <em>delta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#peakdet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.peakdet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converted from MATLAB script at <a class="reference external" href="http://billauer.co.il/peakdet.html">http://billauer.co.il/peakdet.html</a></p>
+<p>Returns two arrays</p>
+<div class="line-block">
+<div class="line">function [maxtab, mintab]=peakdet(v, delta, x)</div>
+<div class="line">PEAKDET Detect peaks in a vector</div>
+<div class="line-block">
+<div class="line">[MAXTAB, MINTAB] = PEAKDET(V, DELTA) finds the local</div>
+<div class="line">maxima and minima (&#8220;peaks&#8221;) in the vector V.</div>
+<div class="line">MAXTAB and MINTAB consists of two columns. Column 1</div>
+<div class="line">contains indices in V, and column 2 the found values.</div>
+<div class="line"><br /></div>
+<div class="line">With [MAXTAB, MINTAB] = PEAKDET(V, DELTA, X) the indices</div>
+<div class="line">in MAXTAB and MINTAB are replaced with the corresponding</div>
+<div class="line">X-values.</div>
+<div class="line"><br /></div>
+<div class="line">A point is considered a maximum peak if it has the maximal</div>
+<div class="line">value, and was preceded (to the left) by a value lower by</div>
+<div class="line">DELTA.</div>
+</div>
+<div class="line">Eli Billauer, 3.4.05 (Explicitly not copyrighted).</div>
+<div class="line">This function is released to the public domain; Any use is allowed.</div>
+<div class="line">Example:</div>
+<div class="line">series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]</div>
+<div class="line">maxtab, mintab = peakdet(series,.3)</div>
+<div class="line">plot(series)</div>
+<div class="line">scatter(array(maxtab)[:,0], array(maxtab)[:,1], color=&#8217;blue&#8217;)</div>
+<div class="line">scatter(array(mintab)[:,0], array(mintab)[:,1], color=&#8217;red&#8217;)</div>
+<div class="line">show()      </div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyLPD.MLtools.savitzky_golay">
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">savitzky_golay</code><span class="sig-paren">(</span><em>y</em>, <em>window_size</em>, <em>order</em>, <em>deriv=0</em>, <em>rate=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#savitzky_golay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.savitzky_golay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smooth (and optionally differentiate) data with a Savitzky-Golay filter.
+The Savitzky-Golay filter removes high frequency noise from data.
+It has the advantage of preserving the original shape and
+features of the signal better than other types of filtering
+approaches, such as moving averages techniques.</p>
+<div class="line-block">
+<div class="line">Parameters</div>
+<div class="line">&#8212;&#8212;&#8212;-</div>
+<div class="line">y : array_like, shape (N,)</div>
+<div class="line-block">
+<div class="line">the values of the time history of the signal.</div>
+</div>
+<div class="line">window_size : int</div>
+<div class="line-block">
+<div class="line">the length of the window. Must be an odd integer number.</div>
+</div>
+<div class="line">order : int</div>
+<div class="line-block">
+<div class="line">the order of the polynomial used in the filtering.</div>
+<div class="line">Must be less then <cite>window_size</cite> - 1.</div>
+</div>
+<div class="line">deriv: int</div>
+<div class="line-block">
+<div class="line">the order of the derivative to compute (default = 0 means only smoothing)</div>
+</div>
+<div class="line">Returns</div>
+<div class="line">&#8212;&#8212;-</div>
+<div class="line">ys : ndarray, shape (N)</div>
+<div class="line-block">
+<div class="line">the smoothed signal (or it&#8217;s n-th derivative).</div>
+</div>
+<div class="line">Notes</div>
+<div class="line">&#8212;&#8211;</div>
+<div class="line">The Savitzky-Golay is a type of low-pass filter, particularly</div>
+<div class="line">suited for smoothing noisy data. The main idea behind this</div>
+<div class="line">approach is to make for each point a least-square fit with a</div>
+<div class="line">polynomial of high order over a odd-sized window centered at</div>
+<div class="line">the point.</div>
+<div class="line">Examples</div>
+<div class="line">&#8212;&#8212;&#8211;</div>
+<div class="line">t = np.linspace(-4, 4, 500)</div>
+<div class="line">y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)</div>
+<div class="line">ysg = savitzky_golay(y, window_size=31, order=4)</div>
+<div class="line">import matplotlib.pyplot as plt</div>
+<div class="line">plt.plot(t, y, label=&#8217;Noisy signal&#8217;)</div>
+<div class="line">plt.plot(t, np.exp(-t**2), &#8216;k&#8217;, lw=1.5, label=&#8217;Original signal&#8217;)</div>
+<div class="line">plt.plot(t, ysg, &#8216;r&#8217;, label=&#8217;Filtered signal&#8217;)</div>
+<div class="line">plt.legend()</div>
+<div class="line">plt.show()</div>
+<div class="line">References</div>
+<div class="line">&#8212;&#8212;&#8212;-</div>
+<div class="line">.. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of</div>
+<div class="line-block">
+<div class="line">Data by Simplified Least Squares Procedures. Analytical</div>
+<div class="line">Chemistry, 1964, 36 (8), pp 1627-1639.</div>
+</div>
+<div class="line">.. [2] Numerical Recipes 3rd Edition: The Art of Scientific Computing</div>
+<div class="line-block">
+<div class="line">W.H. Press, S.A. Teukolsky, W.T. Vetterling, B.P. Flannery</div>
+<div class="line">Cambridge University Press ISBN-13: 9780521880688</div>
+</div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyLPD">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyLPD" title="Permalink to this headline">¶</a></h2>
+<p>PyLPD v0.01</p>
+<p>We compile in this package many functions at our
+laboratory (LPD - sites.ifi.unicamp.br/LPD).</p>
+<p>These module has three major submodules:</p>
+<blockquote>
+<div><ul class="simple">
+<li>MLtools : interaction with matlab, matlab-like functions</li>
+<li>VISAtools: instrument control</li>
+<li>Simtools: simulation scripts</li>
+</ul>
+</div></blockquote>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyLPD</span> <span class="k">import</span> <span class="n">MLtools</span>   <span class="c1"># definição do gerador de funções</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyLPD package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-pyLPD.MLtools">pyLPD.MLtools module</a></li>
+<li><a class="reference internal" href="#module-pyLPD">Module contents</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pyLPD.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Gustavo Wiederhecker.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/pyLPD.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
