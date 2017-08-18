@@ -1,16 +1,13 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>pyLPD package &#8212; pyLPD 0.0.1 documentation</title>
-    
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -24,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="setup module" href="setup.html" />
@@ -36,7 +33,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">
+  <body>
   
 
     <div class="document">
@@ -64,7 +61,7 @@
 delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)
 smooth: Savitzy_Golay smooth double from (0,1)
 sg_order: Savitzy_Golay order, integer
-interp_kind: interpolation kind (&#8216;slinear&#8217;,&#8217;quadratic&#8217;,&#8217;cubic&#8217;), from interp1</p>
+interp_kind: interpolation kind (‘slinear’,’quadratic’,’cubic’), from interp1</p>
 </dd></dl>
 
 <dl class="function">
@@ -86,7 +83,7 @@ which are still mat-objects</p>
 <div class="line">PEAKDET Detect peaks in a vector</div>
 <div class="line-block">
 <div class="line">[MAXTAB, MINTAB] = PEAKDET(V, DELTA) finds the local</div>
-<div class="line">maxima and minima (&#8220;peaks&#8221;) in the vector V.</div>
+<div class="line">maxima and minima (“peaks”) in the vector V.</div>
 <div class="line">MAXTAB and MINTAB consists of two columns. Column 1</div>
 <div class="line">contains indices in V, and column 2 the found values.</div>
 <div class="line"><br /></div>
@@ -104,8 +101,8 @@ which are still mat-objects</p>
 <div class="line">series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]</div>
 <div class="line">maxtab, mintab = peakdet(series,.3)</div>
 <div class="line">plot(series)</div>
-<div class="line">scatter(array(maxtab)[:,0], array(maxtab)[:,1], color=&#8217;blue&#8217;)</div>
-<div class="line">scatter(array(mintab)[:,0], array(mintab)[:,1], color=&#8217;red&#8217;)</div>
+<div class="line">scatter(array(maxtab)[:,0], array(maxtab)[:,1], color=’blue’)</div>
+<div class="line">scatter(array(mintab)[:,0], array(mintab)[:,1], color=’red’)</div>
 <div class="line">show()      </div>
 </div>
 </dd></dl>
@@ -120,7 +117,7 @@ features of the signal better than other types of filtering
 approaches, such as moving averages techniques.</p>
 <div class="line-block">
 <div class="line">Parameters</div>
-<div class="line">&#8212;&#8212;&#8212;-</div>
+<div class="line">———-</div>
 <div class="line">y : array_like, shape (N,)</div>
 <div class="line-block">
 <div class="line">the values of the time history of the signal.</div>
@@ -139,31 +136,31 @@ approaches, such as moving averages techniques.</p>
 <div class="line">the order of the derivative to compute (default = 0 means only smoothing)</div>
 </div>
 <div class="line">Returns</div>
-<div class="line">&#8212;&#8212;-</div>
+<div class="line">——-</div>
 <div class="line">ys : ndarray, shape (N)</div>
 <div class="line-block">
-<div class="line">the smoothed signal (or it&#8217;s n-th derivative).</div>
+<div class="line">the smoothed signal (or it’s n-th derivative).</div>
 </div>
 <div class="line">Notes</div>
-<div class="line">&#8212;&#8211;</div>
+<div class="line">—–</div>
 <div class="line">The Savitzky-Golay is a type of low-pass filter, particularly</div>
 <div class="line">suited for smoothing noisy data. The main idea behind this</div>
 <div class="line">approach is to make for each point a least-square fit with a</div>
 <div class="line">polynomial of high order over a odd-sized window centered at</div>
 <div class="line">the point.</div>
 <div class="line">Examples</div>
-<div class="line">&#8212;&#8212;&#8211;</div>
+<div class="line">——–</div>
 <div class="line">t = np.linspace(-4, 4, 500)</div>
 <div class="line">y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)</div>
 <div class="line">ysg = savitzky_golay(y, window_size=31, order=4)</div>
 <div class="line">import matplotlib.pyplot as plt</div>
-<div class="line">plt.plot(t, y, label=&#8217;Noisy signal&#8217;)</div>
-<div class="line">plt.plot(t, np.exp(-t**2), &#8216;k&#8217;, lw=1.5, label=&#8217;Original signal&#8217;)</div>
-<div class="line">plt.plot(t, ysg, &#8216;r&#8217;, label=&#8217;Filtered signal&#8217;)</div>
+<div class="line">plt.plot(t, y, label=’Noisy signal’)</div>
+<div class="line">plt.plot(t, np.exp(-t**2), ‘k’, lw=1.5, label=’Original signal’)</div>
+<div class="line">plt.plot(t, ysg, ‘r’, label=’Filtered signal’)</div>
 <div class="line">plt.legend()</div>
 <div class="line">plt.show()</div>
 <div class="line">References</div>
-<div class="line">&#8212;&#8212;&#8212;-</div>
+<div class="line">———-</div>
 <div class="line">.. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of</div>
 <div class="line-block">
 <div class="line">Data by Simplified Least Squares Procedures. Analytical</div>
@@ -258,7 +255,7 @@ laboratory (LPD - sites.ifi.unicamp.br/LPD).</p>
       &copy;2017, Gustavo Wiederhecker.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
