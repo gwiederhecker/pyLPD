@@ -3,11 +3,15 @@
 # # Load matlab structure files (with substrctures)
 # The purpose is to be able to access matlab structures and substructures in a easy fashion.
 # This code comes from the post: https://stackoverflow.com/a/29126361/7938052
+
 '''
 This is MLtools package from pyLPD. It contains
 
     * functions for doing matlab-like operations
 '''
+
+
+
 import sys
 from numpy import NaN, Inf, arange, isscalar, asarray, array
 from scipy.interpolate import interp1d
@@ -93,12 +97,12 @@ def peakdet(v, delta, x = None):
     | Eli Billauer, 3.4.05 (Explicitly not copyrighted).
     | This function is released to the public domain; Any use is allowed.
     | Example:
-    | series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]
-    | maxtab, mintab = peakdet(series,.3)
-    | plot(series)
-    | scatter(array(maxtab)[:,0], array(maxtab)[:,1], color='blue')
-    | scatter(array(mintab)[:,0], array(mintab)[:,1], color='red')
-    | show()      
+    >>> series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]
+    >>> maxtab, mintab = peakdet(series,.3)
+    >>> plot(series)
+    >>> scatter(array(maxtab)[:,0], array(maxtab)[:,1], color='blue')
+    >>> scatter(array(mintab)[:,0], array(mintab)[:,1], color='red')
+    >>> show()      
     """
     maxtab = []
     mintab = []
@@ -190,15 +194,16 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
     | the point.
     | Examples
     | --------
-    | t = np.linspace(-4, 4, 500)
-    | y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)
-    | ysg = savitzky_golay(y, window_size=31, order=4)
-    | import matplotlib.pyplot as plt
-    | plt.plot(t, y, label='Noisy signal')
-    | plt.plot(t, np.exp(-t**2), 'k', lw=1.5, label='Original signal')
-    | plt.plot(t, ysg, 'r', label='Filtered signal')
-    | plt.legend()
-    | plt.show()
+    >>> t = np.linspace(-4, 4, 500)
+    >>> y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)
+    >>> ysg = savitzky_golay(y, window_size=31, order=4)
+    >>> import matplotlib.pyplot as plt
+    >>> plt.plot(t, y, label='Noisy signal')
+    >>> plt.plot(t, np.exp(-t**2), 'k', lw=1.5, label='Original signal')
+    >>> plt.plot(t, ysg, 'r', label='Filtered signal')
+    >>> plt.legend()
+    >>> plt.show()
+
     | References
     | ----------
     | .. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of
@@ -237,11 +242,23 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
 #----------------------------------------------------------------------------
 def envPeak(x,delta=0.2, smooth = 0.05, sg_order = 0, interp_kind='slinear'):
     '''
-    x: input vector
-    delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)
-    smooth: Savitzy_Golay smooth double from (0,1)
-    sg_order: Savitzy_Golay order, integer
-    interp_kind: interpolation kind ('slinear','quadratic','cubic'), from interp1
+    | Find envelope of dataset
+    | x: input vector
+    | delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)
+    | smooth: Savitzy_Golay smooth double from (0,1)
+    | sg_order: Savitzy_Golay order, integer
+    | interp_kind: interpolation kind ('slinear','quadratic','cubic'), from interp1
+    >>> import pyLPD.MLtools as mlt
+    >>> import numpy as np
+    >>> import matplotlib.pyplot as plt
+    >>> %matplotlib inline
+    >>> #generate sinusoid
+    >>> x = np.linspace(-10,10,1e4)
+    >>> y = np.sin(2*np.pi*x)*np.exp(-x**2/10)
+    >>> ylower,yupper = mlt.envPeak(y,delta=0.05, sg_order=0)
+    >>> plt.plot(x,y,'k')
+    >>> plt.plot(x,yupper,'.r')
+    >>> plt.plot(x,ylower,'.b')
     '''
 
     #----------------------------------------------------   

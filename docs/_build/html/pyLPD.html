@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyLPD package &#8212; pyLPD 0.0.1 documentation</title>
+    <title>pyLPD package &#8212; pyLPD 0.0.1.5 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.0.1',
+        VERSION:     '0.0.1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -57,11 +57,27 @@
 <dl class="function">
 <dt id="pyLPD.MLtools.envPeak">
 <code class="descclassname">pyLPD.MLtools.</code><code class="descname">envPeak</code><span class="sig-paren">(</span><em>x</em>, <em>delta=0.2</em>, <em>smooth=0.05</em>, <em>sg_order=0</em>, <em>interp_kind='slinear'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#envPeak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.envPeak" title="Permalink to this definition">¶</a></dt>
-<dd><p>x: input vector
-delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)
-smooth: Savitzy_Golay smooth double from (0,1)
-sg_order: Savitzy_Golay order, integer
-interp_kind: interpolation kind (‘slinear’,’quadratic’,’cubic’), from interp1</p>
+<dd><div class="line-block">
+<div class="line">Find envelope of dataset</div>
+<div class="line">x: input vector</div>
+<div class="line">delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)</div>
+<div class="line">smooth: Savitzy_Golay smooth double from (0,1)</div>
+<div class="line">sg_order: Savitzy_Golay order, integer</div>
+<div class="line">interp_kind: interpolation kind (‘slinear’,’quadratic’,’cubic’), from interp1</div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyLPD.MLtools</span> <span class="k">as</span> <span class="nn">mlt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#generate sinusoid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">1e4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ylower</span><span class="p">,</span><span class="n">yupper</span> <span class="o">=</span> <span class="n">mlt</span><span class="o">.</span><span class="n">envPeak</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">sg_order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">yupper</span><span class="p">,</span><span class="s1">&#39;.r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ylower</span><span class="p">,</span><span class="s1">&#39;.b&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -98,12 +114,14 @@ which are still mat-objects</p>
 <div class="line">Eli Billauer, 3.4.05 (Explicitly not copyrighted).</div>
 <div class="line">This function is released to the public domain; Any use is allowed.</div>
 <div class="line">Example:</div>
-<div class="line">series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]</div>
-<div class="line">maxtab, mintab = peakdet(series,.3)</div>
-<div class="line">plot(series)</div>
-<div class="line">scatter(array(maxtab)[:,0], array(maxtab)[:,1], color=’blue’)</div>
-<div class="line">scatter(array(mintab)[:,0], array(mintab)[:,1], color=’red’)</div>
-<div class="line">show()      </div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">series</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">maxtab</span><span class="p">,</span> <span class="n">mintab</span> <span class="o">=</span> <span class="n">peakdet</span><span class="p">(</span><span class="n">series</span><span class="p">,</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plot</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scatter</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">maxtab</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">array</span><span class="p">(</span><span class="n">maxtab</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scatter</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">mintab</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">array</span><span class="p">(</span><span class="n">mintab</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">()</span>      
+</pre></div>
 </div>
 </dd></dl>
 
@@ -150,15 +168,19 @@ approaches, such as moving averages techniques.</p>
 <div class="line">the point.</div>
 <div class="line">Examples</div>
 <div class="line">——–</div>
-<div class="line">t = np.linspace(-4, 4, 500)</div>
-<div class="line">y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)</div>
-<div class="line">ysg = savitzky_golay(y, window_size=31, order=4)</div>
-<div class="line">import matplotlib.pyplot as plt</div>
-<div class="line">plt.plot(t, y, label=’Noisy signal’)</div>
-<div class="line">plt.plot(t, np.exp(-t**2), ‘k’, lw=1.5, label=’Original signal’)</div>
-<div class="line">plt.plot(t, ysg, ‘r’, label=’Filtered signal’)</div>
-<div class="line">plt.legend()</div>
-<div class="line">plt.show()</div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ysg</span> <span class="o">=</span> <span class="n">savitzky_golay</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Noisy signal&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original signal&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ysg</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered signal&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
 <div class="line">References</div>
 <div class="line">———-</div>
 <div class="line">.. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of</div>
@@ -177,7 +199,7 @@ approaches, such as moving averages techniques.</p>
 </div>
 <div class="section" id="module-pyLPD">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyLPD" title="Permalink to this headline">¶</a></h2>
-<p>PyLPD v0.0.1.5</p>
+<p><strong>pyLPD</strong></p>
 <p>We compile in this package many functions used at our
 laboratory (LPD - sites.ifi.unicamp.br/LPD).</p>
 <p>These goal is to build three major submodules:</p>

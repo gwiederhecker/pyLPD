@@ -12,6 +12,12 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(HERE, 'README.md'), encoding='utf-8') as f:
     readme = f.read()
 
+with open(os.path.join(HERE,'pyLPD/__init__.py')) as fin:
+    for line in fin:
+        if line.startswith('__version__ ='):
+            version = eval(line[14:])
+            break
+
 
 setup_requires = ['pytest-runner'] if \
     {'pytest', 'test', 'ptr'}.intersection(sys.argv) else []

@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyLPD.MLtools &#8212; pyLPD 0.0.1 documentation</title>
+    <title>pyLPD.MLtools &#8212; pyLPD 0.0.1.5 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.0.1',
+        VERSION:     '0.0.1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,11 +45,15 @@
 <span class="c1"># # Load matlab structure files (with substrctures)</span>
 <span class="c1"># The purpose is to be able to access matlab structures and substructures in a easy fashion.</span>
 <span class="c1"># This code comes from the post: https://stackoverflow.com/a/29126361/7938052</span>
+
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">This is MLtools package from pyLPD. It contains</span>
 
 <span class="sd">    * functions for doing matlab-like operations</span>
 <span class="sd">&#39;&#39;&#39;</span>
+
+
+
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">NaN</span><span class="p">,</span> <span class="n">Inf</span><span class="p">,</span> <span class="n">arange</span><span class="p">,</span> <span class="n">isscalar</span><span class="p">,</span> <span class="n">asarray</span><span class="p">,</span> <span class="n">array</span>
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
@@ -135,12 +139,12 @@
 <span class="sd">    | Eli Billauer, 3.4.05 (Explicitly not copyrighted).</span>
 <span class="sd">    | This function is released to the public domain; Any use is allowed.</span>
 <span class="sd">    | Example:</span>
-<span class="sd">    | series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]</span>
-<span class="sd">    | maxtab, mintab = peakdet(series,.3)</span>
-<span class="sd">    | plot(series)</span>
-<span class="sd">    | scatter(array(maxtab)[:,0], array(maxtab)[:,1], color=&#39;blue&#39;)</span>
-<span class="sd">    | scatter(array(mintab)[:,0], array(mintab)[:,1], color=&#39;red&#39;)</span>
-<span class="sd">    | show()      </span>
+<span class="sd">    &gt;&gt;&gt; series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]</span>
+<span class="sd">    &gt;&gt;&gt; maxtab, mintab = peakdet(series,.3)</span>
+<span class="sd">    &gt;&gt;&gt; plot(series)</span>
+<span class="sd">    &gt;&gt;&gt; scatter(array(maxtab)[:,0], array(maxtab)[:,1], color=&#39;blue&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; scatter(array(mintab)[:,0], array(mintab)[:,1], color=&#39;red&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; show()      </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">maxtab</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">mintab</span> <span class="o">=</span> <span class="p">[]</span>
@@ -232,15 +236,16 @@
 <span class="sd">    | the point.</span>
 <span class="sd">    | Examples</span>
 <span class="sd">    | --------</span>
-<span class="sd">    | t = np.linspace(-4, 4, 500)</span>
-<span class="sd">    | y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)</span>
-<span class="sd">    | ysg = savitzky_golay(y, window_size=31, order=4)</span>
-<span class="sd">    | import matplotlib.pyplot as plt</span>
-<span class="sd">    | plt.plot(t, y, label=&#39;Noisy signal&#39;)</span>
-<span class="sd">    | plt.plot(t, np.exp(-t**2), &#39;k&#39;, lw=1.5, label=&#39;Original signal&#39;)</span>
-<span class="sd">    | plt.plot(t, ysg, &#39;r&#39;, label=&#39;Filtered signal&#39;)</span>
-<span class="sd">    | plt.legend()</span>
-<span class="sd">    | plt.show()</span>
+<span class="sd">    &gt;&gt;&gt; t = np.linspace(-4, 4, 500)</span>
+<span class="sd">    &gt;&gt;&gt; y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)</span>
+<span class="sd">    &gt;&gt;&gt; ysg = savitzky_golay(y, window_size=31, order=4)</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(t, y, label=&#39;Noisy signal&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(t, np.exp(-t**2), &#39;k&#39;, lw=1.5, label=&#39;Original signal&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(t, ysg, &#39;r&#39;, label=&#39;Filtered signal&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.legend()</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+
 <span class="sd">    | References</span>
 <span class="sd">    | ----------</span>
 <span class="sd">    | .. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of</span>
@@ -279,11 +284,23 @@
 <span class="c1">#----------------------------------------------------------------------------</span>
 <div class="viewcode-block" id="envPeak"><a class="viewcode-back" href="../../pyLPD.html#pyLPD.MLtools.envPeak">[docs]</a><span class="k">def</span> <span class="nf">envPeak</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">smooth</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">sg_order</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">interp_kind</span><span class="o">=</span><span class="s1">&#39;slinear&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    x: input vector</span>
-<span class="sd">    delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)</span>
-<span class="sd">    smooth: Savitzy_Golay smooth double from (0,1)</span>
-<span class="sd">    sg_order: Savitzy_Golay order, integer</span>
-<span class="sd">    interp_kind: interpolation kind (&#39;slinear&#39;,&#39;quadratic&#39;,&#39;cubic&#39;), from interp1</span>
+<span class="sd">    | Find envelope of dataset</span>
+<span class="sd">    | x: input vector</span>
+<span class="sd">    | delta: double from(0,1); peakfinding threshold (using peakdet, see peakdet help)</span>
+<span class="sd">    | smooth: Savitzy_Golay smooth double from (0,1)</span>
+<span class="sd">    | sg_order: Savitzy_Golay order, integer</span>
+<span class="sd">    | interp_kind: interpolation kind (&#39;slinear&#39;,&#39;quadratic&#39;,&#39;cubic&#39;), from interp1</span>
+<span class="sd">    &gt;&gt;&gt; import pyLPD.MLtools as mlt</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; %matplotlib inline</span>
+<span class="sd">    &gt;&gt;&gt; #generate sinusoid</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(-10,10,1e4)</span>
+<span class="sd">    &gt;&gt;&gt; y = np.sin(2*np.pi*x)*np.exp(-x**2/10)</span>
+<span class="sd">    &gt;&gt;&gt; ylower,yupper = mlt.envPeak(y,delta=0.05, sg_order=0)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x,y,&#39;k&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x,yupper,&#39;.r&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x,ylower,&#39;.b&#39;)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="c1">#----------------------------------------------------   </span>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-PyLPD v0.0.1.5
+**pyLPD**
 
 We compile in this package many functions used at our
 laboratory (LPD - sites.ifi.unicamp.br/LPD).
@@ -21,6 +21,10 @@ Usage
     >>> from pyLPD import MLtools   # definição do gerador de funções
 
 """
+
+
+__version__ = '0.0.1.5'  
+
 
 ## import instrument modules
 from .MLtools import *
