@@ -7,10 +7,10 @@ Welcome to pyLPD's documentation!
 =================================
 
 .. toctree::
+   modules
    :maxdepth: 2
    :caption: Contents:
    
-   modules
 
 
 
