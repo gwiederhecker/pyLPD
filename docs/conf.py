@@ -21,10 +21,10 @@ import os
 import sys
 import mock
 import shlex
-#MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.pyplot', 'scipy.interpolate',
-#        'scipy.io','math']
-#for mod_name in MOCK_MODULES:
-#    sys.modules[mod_name] = mock.Mock()
+MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.pyplot', 'scipy.interpolate',
+        'scipy.io','math']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 sys.path.insert(0, os.path.abspath('.'))
 sys.path.append(os.path.join(os.path.dirname(__name__), ".."))
