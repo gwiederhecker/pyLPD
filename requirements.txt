@@ -1,0 +1,4 @@
+setuptools
+numpy
+future; python_version < "3"
+sphinxcontrib-napoleon
