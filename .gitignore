@@ -10,3 +10,6 @@
 *.pyc
 
 *.swo
+
+# Sphinx documentation
+docs/_build/
