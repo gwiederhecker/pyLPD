@@ -98,8 +98,12 @@ def peakdet(v, delta, x = None):
 
     Returns
     -------
+    iPk_max: 1D, N (integer)
+        indices 
     maxtab: 2D, Nx2
         indices ([:,1]) and values ([:,2]) of maxima 
+    iPk_min: 1D, N (integer)
+        indices     
     mintab: 2D, Nx2
         indices ([:,1]) and values ([:,2]) of minima
     
@@ -114,7 +118,7 @@ def peakdet(v, delta, x = None):
     ------
     >>> import matplotlib.pyplot as plt 
     >>> series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]
-    >>> maxtab, mintab = peakdet(series,.3)
+    >>> iPk_max, maxtab, iPk_min, mintab = peakdet(series,.3)
     >>> plt.plot(series)
     >>> plt.scatter(array(maxtab)[:,0], array(maxtab)[:,1], color='blue')
     >>> plt.scatter(array(mintab)[:,0], array(mintab)[:,1], color='red')
