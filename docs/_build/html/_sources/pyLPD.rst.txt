@@ -4,8 +4,8 @@ pyLPD package
 Submodules
 ----------
 
-pyLPD\.MLtools module
----------------------
+pyLPD.MLtools module
+--------------------
 
 .. automodule:: pyLPD.MLtools
     :members:

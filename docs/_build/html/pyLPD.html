@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pyLPD package &mdash; pyLPD 0.0.1.5 documentation</title>
+  <title>pyLPD package &mdash; pyLPD 0.0.1.6 documentation</title>
   
 
   
@@ -25,27 +25,18 @@
   
 
   
-  
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="pyLPD 0.0.1.5 documentation" href="index.html"/>
-        <link rel="up" title="pyLPD" href="modules.html"/>
-        <link rel="next" title="setup module" href="setup.html"/>
-        <link rel="prev" title="pyLPD" href="modules.html"/> 
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pyLPD" href="modules.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -67,7 +58,7 @@
             
             
               <div class="version">
-                0.0.1.5
+                0.0.1.6
               </div>
             
           
@@ -100,7 +91,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#module-pyLPD">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
 </ul>
 </li>
 </ul>
@@ -114,7 +104,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">pyLPD</a>
@@ -122,9 +112,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -175,112 +166,84 @@
 </div>
 <div class="section" id="module-pyLPD.MLtools">
 <span id="pylpd-mltools-module"></span><h2>pyLPD.MLtools module<a class="headerlink" href="#module-pyLPD.MLtools" title="Permalink to this headline">¶</a></h2>
-<p>MLtools is a package from pyLPD intented to recreate some useful Matlab functions in Python.</p>
+<p>This is MLtools package from pyLPD. It contains</p>
+<blockquote>
+<div><ul class="simple">
+<li>functions for doing matlab-like operations</li>
+</ul>
+</div></blockquote>
 <dl class="function">
 <dt id="pyLPD.MLtools.envPeak">
-<code class="descclassname">pyLPD.MLtools.</code><code class="descname">envPeak</code><span class="sig-paren">(</span><em>x</em>, <em>delta=0.2</em>, <em>window_size=0.05</em>, <em>sg_order=0</em>, <em>interp_kind='slinear'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#envPeak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.envPeak" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find envelope of dataset based on interpolation of maxima and minima.</p>
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">envPeak</code><span class="sig-paren">(</span><em>x</em>, <em>delta=0.2</em>, <em>smooth=0.05</em>, <em>sg_order=0</em>, <em>interp_kind='slinear'</em>, <em>edge_pts=0.01</em><span class="sig-paren">)</span><a class="headerlink" href="#pyLPD.MLtools.envPeak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find envelopes of dataset</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – signal whose envelope is to be determined</li>
-<li><strong>delta</strong> (<em>double from</em><em>(</em><em>0</em><em>,</em><em>1</em><em>)</em>) – A point is considered a maximum peak if it has the maximal
-value, and was preceded (to the left) by a value lower by
-delta. From peakdet function.</li>
-<li><strong>window_size</strong> (<em>double from</em><em> (</em><em>0</em><em>,</em><em>1</em><em>)</em>) – the length of the window (1 correponds to full vector length).
-From Savitzy_Golay function</li>
-<li><strong>sg_order</strong> (<em>int</em>) – the order of the polynomial used in the filtering.
-Must be less then <cite>window_size</cite> - 1. From Savitzy_Golay function</li>
-<li><strong>interp_kind</strong> (<em>string</em><em> (</em><em>'slinear'</em><em>,</em><em>'quadratic'</em><em>,</em><em>'cubic'</em><em>)</em>) – interpolation kind, from interp1 (scipy)</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>numpy array</em>) – input vector</li>
+<li><strong>delta</strong> (<em>double</em>) – double from(0,1); peakfinding threshold (using peakdet, see peakdet help)</li>
+<li><strong>sg_order</strong> (<em>integer</em>) – Savitzy_Golay order</li>
+<li><strong>interp_kind</strong> (<em>string</em>) – interpolation kind (‘slinear’,’quadratic’,’cubic’), from interp1</li>
+<li><strong>edge_pts</strong> (<em>double</em>) – fraction of input vector that will be considered as edge; this avoid edge effects in the filter</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>ylower</strong> (<em>array-lie, shape (N,).</em>) – Lower envelope.</li>
-<li><strong>yupper</strong> (<em>array-like, shape (N,).</em>) – Upper envelope.</li>
-</ul>
-</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Notes</p>
-<p>This function was adapted from Matlab’s Signal Processing toolbox.</p>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyLPD.MLtools</span> <span class="k">as</span> <span class="nn">mlt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#generate sinusoid</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">1e4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ylower</span><span class="p">,</span><span class="n">yupper</span> <span class="o">=</span> <span class="n">mlt</span><span class="o">.</span><span class="n">envPeak</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">delta</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">sg_order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">yupper</span><span class="p">,</span><span class="s1">&#39;.r&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ylower</span><span class="p">,</span><span class="s1">&#39;.b&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyLPD.MLtools.loadmat">
-<code class="descclassname">pyLPD.MLtools.</code><code class="descname">loadmat</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#loadmat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.loadmat" title="Permalink to this definition">¶</a></dt>
-<dd><p>The purpose is to be able to access matlab structures and substructures in a easy fashion.
-This function should be called instead of direct spio.loadmat
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">loadmat</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyLPD.MLtools.loadmat" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function should be called instead of direct spio.loadmat
 as it cures the problem of not properly recovering python dictionaries
 from mat files. It calls the function check keys to cure all entries
 which are still mat-objects</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>string</em>) – string containing the full path of the .MAT file.</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Notes</p>
-<p>This code comes from the post: <a class="reference external" href="https://stackoverflow.com/a/29126361/7938052">https://stackoverflow.com/a/29126361/7938052</a></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyLPD.MLtools.peakdet">
-<code class="descclassname">pyLPD.MLtools.</code><code class="descname">peakdet</code><span class="sig-paren">(</span><em>v</em>, <em>delta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#peakdet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.peakdet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Detects maxima and minima based on variation of neighboring points.</p>
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">peakdet</code><span class="sig-paren">(</span><em>v</em>, <em>delta</em>, <em>x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyLPD.MLtools.peakdet" title="Permalink to this definition">¶</a></dt>
+<dd><p>PEAKDET Detect peaks in a vector</p>
+<p>A point is considered a maximum peak if it has the maximal
+value, and was preceded (to the left) by a value lower by
+DELTA.</p>
+<p>Eli Billauer, 3.4.05 (Explicitly not copyrighted).</p>
+<p>This function is released to the public domain; Any use is allowed.</p>
+<p>Converted from MATLAB script at <a class="reference external" href="http://billauer.co.il/peakdet.html">http://billauer.co.il/peakdet.html</a>. Adapted by G. Wiederhecker
+Main difference is the use of JIT to speed up!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>v</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – containing y-values</li>
-<li><strong>delta</strong> (<em>double</em>) – A point is considered a maximum peak if it has the maximal
-value, and was preceded (to the left) by a value lower by
-delta.</li>
-<li><strong>x</strong> (<em>array-like</em><em>, </em><em>shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – containing x-values. When provided, x-values are returned instead of indexes.</li>
+<li><strong>v</strong> (<em>array</em><em> or </em><em>numpy array</em>) – dataset containing peaks to be found</li>
+<li><strong>delta</strong> (<em>double</em>) – A point is considered a maximum peak if it has the maximal value,
+and was preceded (to the left) by a value lower by delta</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>maxtab</strong> (<em>2D, Nx2</em>) – indices ([:,1]) and values ([:,2]) of maxima</li>
-<li><strong>mintab</strong> (<em>2D, Nx2</em>) – indices ([:,1]) and values ([:,2]) of minima</li>
+<li><strong>posmax</strong> (<em>array of int</em>) – array with the indices of x corresponding to maxima</li>
+<li><strong>maxtab</strong> (<em>array of doubles</em>) – with maxima values</li>
+<li><strong>posmin</strong> (<em>array of int</em>) – array with the indices of x corresponding to minima</li>
+<li><strong>mintab</strong> (<em>array of double</em>) – array with minima values</li>
 </ul>
 </p>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Notes</p>
-<p>Converted from MATLAB script at <a class="reference external" href="http://billauer.co.il/peakdet.html">http://billauer.co.il/peakdet.html</a></p>
-<p>Eli Billauer, 3.4.05 (Explicitly not copyrighted).
-This function is released to the public domain; Any use is allowed.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">series</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">maxtab</span><span class="p">,</span> <span class="n">mintab</span> <span class="o">=</span> <span class="n">peakdet</span><span class="p">(</span><span class="n">series</span><span class="p">,</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">maxtab</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">array</span><span class="p">(</span><span class="n">maxtab</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">mintab</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">array</span><span class="p">(</span><span class="n">mintab</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyLPD.mltools</span> <span class="k">as</span> <span class="nn">mlt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">series</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># sample data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">posmax</span><span class="p">,</span> <span class="n">maxtab</span><span class="p">,</span> <span class="n">posmin</span><span class="p">,</span> <span class="n">mintab</span> <span class="o">=</span> <span class="n">peakdet</span><span class="p">(</span><span class="n">series</span><span class="p">,</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># find max/min</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">series</span><span class="p">)</span> <span class="c1">#plot sample data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">posmax</span><span class="p">,</span> <span class="n">maxtab</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;max&#39;</span><span class="p">)</span> <span class="c1"># plt max</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">posmin</span><span class="p">,</span> <span class="n">mintab</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">)</span> <span class="c1"># plot min</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -288,7 +251,7 @@ This function is released to the public domain; Any use is allowed.</p>
 
 <dl class="function">
 <dt id="pyLPD.MLtools.savitzky_golay">
-<code class="descclassname">pyLPD.MLtools.</code><code class="descname">savitzky_golay</code><span class="sig-paren">(</span><em>y</em>, <em>window_size</em>, <em>order</em>, <em>deriv=0</em>, <em>rate=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyLPD/MLtools.html#savitzky_golay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyLPD.MLtools.savitzky_golay" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyLPD.MLtools.</code><code class="descname">savitzky_golay</code><span class="sig-paren">(</span><em>y</em>, <em>window_size</em>, <em>order</em>, <em>deriv=0</em>, <em>rate=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyLPD.MLtools.savitzky_golay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Smooth (and optionally differentiate) data with a Savitzky-Golay filter.
 The Savitzky-Golay filter removes high frequency noise from data.
 It has the advantage of preserving the original shape and
@@ -321,12 +284,11 @@ suited for smoothing noisy data. The main idea behind this
 approach is to make for each point a least-square fit with a
 polynomial of high order over a odd-sized window centered at
 the point.</p>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ysg</span> <span class="o">=</span> <span class="n">savitzky_golay</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Noisy signal&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original signal&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">ysg</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered signal&#39;</span><span class="p">)</span>
@@ -381,7 +343,7 @@ This is based heavily on PyVISA.</dd>
 </ul>
 </div></blockquote>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyLPD</span> <span class="k">import</span> <span class="n">MLtools</span> <span class="k">as</span> <span class="n">mlt</span>   <span class="c1"># import the MLtools module as mlt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyLPD</span> <span class="k">import</span> <span class="n">MLtools</span> <span class="k">as</span> <span class="n">mlt</span>   <span class="c1"># import the MLtools module as mlt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyLPD</span> <span class="k">import</span> <span class="n">VISAtools</span> <span class="k">as</span> <span class="n">vlt</span>   <span class="c1"># import the MLtools module as mlt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyLPD</span> <span class="k">import</span> <span class="n">SIMtools</span> <span class="k">as</span> <span class="n">smt</span>   <span class="c1"># import the MLtools module as mlt</span>
 </pre></div>
@@ -391,15 +353,11 @@ This is based heavily on PyVISA.</dd>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="setup.html" class="btn btn-neutral float-right" title="setup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="modules.html" class="btn btn-neutral" title="pyLPD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -415,7 +373,7 @@ This is based heavily on PyVISA.</dd>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -433,7 +391,8 @@ This is based heavily on PyVISA.</dd>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1.5',
+            VERSION:'0.0.1.6',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -443,7 +402,6 @@ This is based heavily on PyVISA.</dd>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
@@ -452,14 +410,11 @@ This is based heavily on PyVISA.</dd>
     <script type="text/javascript" src="_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

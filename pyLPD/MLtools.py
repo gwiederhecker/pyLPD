@@ -3,38 +3,27 @@
 # # Load matlab structure files (with substrctures)
 # The purpose is to be able to access matlab structures and substructures in a easy fashion.
 # This code comes from the post: https://stackoverflow.com/a/29126361/7938052
-
 '''
-MLtools is a package from pyLPD intented to recreate some useful Matlab functions in Python.
+This is MLtools package from pyLPD. It contains
+
+    * functions for doing matlab-like operations
 '''
 
-
-
+import scipy.io as spio
 import sys
 from numpy import NaN, Inf, arange, isscalar, asarray, array
 from scipy.interpolate import interp1d
 from math import ceil
 import numpy as np
 from math import factorial    
-import scipy.io as spio
-
-
+from numba import njit
+#****************************************************************************
 def loadmat(filename):
     '''
-    The purpose is to be able to access matlab structures and substructures in a easy fashion. 
-    This function should be called instead of direct spio.loadmat
+    this function should be called instead of direct spio.loadmat
     as it cures the problem of not properly recovering python dictionaries
     from mat files. It calls the function check keys to cure all entries
     which are still mat-objects
-
-    Parameters
-    ---------
-    filename : string
-        string containing the full path of the .MAT file.
-
-    Notes
-    -----
-    This code comes from the post: https://stackoverflow.com/a/29126361/7938052  
     '''
     data = spio.loadmat(filename, struct_as_record=False, squeeze_me=True)
     return _check_keys(data)
@@ -79,67 +68,75 @@ def _tolist(ndarray):
         else:
             elem_list.append(sub_elem)
     return elem_list
-
-
+#----------------------------------------------------------------------------
+#****************************************************************************
+@njit
 def peakdet(v, delta, x = None):
     """
-    Detects maxima and minima based on variation of neighboring points.
+    PEAKDET Detect peaks in a vector
 
+    A point is considered a maximum peak if it has the maximal
+    value, and was preceded (to the left) by a value lower by
+    DELTA.
+
+    Eli Billauer, 3.4.05 (Explicitly not copyrighted).
+
+    This function is released to the public domain; Any use is allowed. 
+
+    Converted from MATLAB script at http://billauer.co.il/peakdet.html. Adapted by G. Wiederhecker
+    Main difference is the use of JIT to speed up!
+    
+    
     Parameters
-    -------
-    v : array-like, shape (N,)
-        containing y-values
-    delta : double
-        A point is considered a maximum peak if it has the maximal
-        value, and was preceded (to the left) by a value lower by
-        delta.         
-    x : array-like, shape (N,)  
-        containing x-values. When provided, x-values are returned instead of indexes.
+    ----------
+    v: array or numpy array
+        dataset containing peaks to be found
+    delta: double
+        A point is considered a maximum peak if it has the maximal value, 
+        and was preceded (to the left) by a value lower by delta
 
     Returns
     -------
-    iPk_max: 1D, N (integer)
-        indices 
-    maxtab: 2D, Nx2
-        indices ([:,1]) and values ([:,2]) of maxima 
-    iPk_min: 1D, N (integer)
-        indices     
-    mintab: 2D, Nx2
-        indices ([:,1]) and values ([:,2]) of minima
-    
-    Notes
-    -----
-    Converted from MATLAB script at http://billauer.co.il/peakdet.html
-
-    Eli Billauer, 3.4.05 (Explicitly not copyrighted).
-    This function is released to the public domain; Any use is allowed.
+    posmax: array of int
+        array with the indices of x corresponding to maxima
+    maxtab: array of doubles
+        with maxima values
+    posmin: array of int
+        array with the indices of x corresponding to minima
+    mintab: array of double
+        array with minima values
     
     Examples
-    ------
-    >>> import matplotlib.pyplot as plt 
-    >>> series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0]
-    >>> iPk_max, maxtab, iPk_min, mintab = peakdet(series,.3)
-    >>> plt.plot(series)
-    >>> plt.scatter(array(maxtab)[:,0], array(maxtab)[:,1], color='blue')
-    >>> plt.scatter(array(mintab)[:,0], array(mintab)[:,1], color='red')
+    --------
+    >>> import pyLPD.mltools as mlt
+    >>> import matplotlib.pyplot as plt
+    >>> series = [0,0,0,2,0,0,0,-2,0,0,0,2,0,0,0,-2,0] # sample data
+    >>> posmax, maxtab, posmin, mintab = peakdet(series,.3) # find max/min
+    >>> plt.plot(series) #plot sample data
+    >>> plt.scatter(posmax, maxtab, color='blue', label='max') # plt max
+    >>> plt.scatter(posmin, mintab, color='red', label='min') # plot min
+    >>> plt.legend(loc='best')
     >>> plt.show()      
     """
+    #initialize output arrays
     maxtab = []
+    posmax = []
     mintab = []
+    posmin = []
        
     if x is None:
         x = arange(len(v))
     
-    v = asarray(v)
+   # v = asarray(v)
     
-    if len(v) != len(x):
-        sys.exit('Input vectors v and x must have same length')
+#     if len(v) != len(x):
+#         sys.exit('Input vectors v and x must have same length')
     
-    if not isscalar(delta):
-        sys.exit('Input argument delta must be a scalar')
+#     if not isscalar(delta):
+#         sys.exit('Input argument delta must be a scalar')
     
-    if delta <= 0:
-        sys.exit('Input argument delta must be positive')
+#     if delta <= 0:
+#         sys.exit('Input argument delta must be positive')
     
     mn, mx = Inf, -Inf
     mnpos, mxpos = NaN, NaN
@@ -157,23 +154,22 @@ def peakdet(v, delta, x = None):
         
         if lookformax:
             if this < mx-delta:
-                maxtab.append((mxpos, mx))
+                maxtab.append(mx)
+                posmax.append(int(mxpos))
                 mn = this
                 mnpos = x[i]
                 lookformax = False
         else:
             if this > mn+delta:
-                mintab.append((mnpos, mn))
+                mintab.append(mn)
+                posmin.append(int(mnpos))
                 mx = this
                 mxpos = x[i]
                 lookformax = True
-                
-    ind_max = array(maxtab)[:,0].astype(int);
-    ind_min = array(mintab)[:,0].astype(int);
-
-    return ind_max, array(maxtab), ind_min, array(mintab)
-
-
+                           
+    return array(posmax), array(maxtab), array(posmin), array(mintab)
+#****************************************************************************
+#----------------------------------------------------------------------------
 def savitzky_golay(y, window_size, order, deriv=0, rate=1):
     """
     Smooth (and optionally differentiate) data with a Savitzky-Golay filter.
@@ -181,7 +177,7 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
     It has the advantage of preserving the original shape and
     features of the signal better than other types of filtering
     approaches, such as moving averages techniques.
-
+    
     Parameters
     ----------
     y : array_like, shape (N,)
@@ -198,7 +194,6 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
     -------
     ys : ndarray, shape (N)
         the smoothed signal (or it's n-th derivative).
-
     Notes
     -----
     The Savitzky-Golay is a type of low-pass filter, particularly
@@ -206,28 +201,27 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
     approach is to make for each point a least-square fit with a
     polynomial of high order over a odd-sized window centered at
     the point.
-
-    Examples
-    --------
-    >>> import matplotlib.pyplot as plt
-    >>> import numpy as np
+    
+    Example 
+    -------
     >>> t = np.linspace(-4, 4, 500)
     >>> y = np.exp( -t**2 ) + np.random.normal(0, 0.05, t.shape)
     >>> ysg = savitzky_golay(y, window_size=31, order=4)
+    >>> import matplotlib.pyplot as plt
     >>> plt.plot(t, y, label='Noisy signal')
     >>> plt.plot(t, np.exp(-t**2), 'k', lw=1.5, label='Original signal')
     >>> plt.plot(t, ysg, 'r', label='Filtered signal')
     >>> plt.legend()
     >>> plt.show()
-
+    
     References
     ----------
-    .. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of
-       Data by Simplified Least Squares Procedures. Analytical
-       Chemistry, 1964, 36 (8), pp 1627-1639.
-    .. [2] Numerical Recipes 3rd Edition: The Art of Scientific Computing
-       W.H. Press, S.A. Teukolsky, W.T. Vetterling, B.P. Flannery
-       Cambridge University Press ISBN-13: 9780521880688
+     .. [1] A. Savitzky, M. J. E. Golay, Smoothing and Differentiation of
+        Data by Simplified Least Squares Procedures. Analytical
+        Chemistry, 1964, 36 (8), pp 1627-1639.
+     .. [2] Numerical Recipes 3rd Edition: The Art of Scientific Computing
+        W.H. Press, S.A. Teukolsky, W.T. Vetterling, B.P. Flannery
+        Cambridge University Press ISBN-13: 9780521880688
     """
 
     
@@ -251,55 +245,29 @@ def savitzky_golay(y, window_size, order, deriv=0, rate=1):
     lastvals = y[-1] + np.abs(y[-half_window-1:-1][::-1] - y[-1])
     y = np.concatenate((firstvals, y, lastvals))
     return np.convolve( m[::-1], y, mode='valid')
-
-
-def envPeak(x, delta=0.2, window_size = 0.05, sg_order = 0, interp_kind='slinear'):
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+#****************************************************************************
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+def envPeak(x,delta=0.2, smooth = 0.05, sg_order = 0, interp_kind='slinear', edge_pts=1e-2):
     '''
-    Find envelope of dataset based on interpolation of maxima and minima.
+    Find envelopes of dataset
 
     Parameters
     ----------
-    x: array-like, shape (N,)
-        signal whose envelope is to be determined
-    delta : double from(0,1)
-        A point is considered a maximum peak if it has the maximal
-        value, and was preceded (to the left) by a value lower by
-        delta. From peakdet function.
-    window_size : double from (0,1)
-        the length of the window (1 correponds to full vector length).
-        From Savitzy_Golay function
-    sg_order:  int
-        the order of the polynomial used in the filtering.
-        Must be less then `window_size` - 1. From Savitzy_Golay function
-    interp_kind: string ('slinear','quadratic','cubic')
-        interpolation kind, from interp1 (scipy)
 
-    Returns
-    -------
-    ylower: array-lie, shape (N,).
-        Lower envelope.
-    yupper: array-like, shape (N,).
-        Upper envelope.
-
-    Notes
-    -----
-    This function was adapted from Matlab's Signal Processing toolbox. 
-
-    Examples
-    --------
-    >>> import pyLPD.MLtools as mlt
-    >>> import numpy as np
-    >>> import matplotlib.pyplot as plt
-    >>> %matplotlib inline
-    >>> #generate sinusoid
-    >>> x = np.linspace(-10,10,1e4)
-    >>> y = np.sin(2*np.pi*x)*np.exp(-x**2/10)
-    >>> ylower,yupper = mlt.envPeak(y,delta=0.05, sg_order=0)
-    >>> plt.plot(x,y,'k')
-    >>> plt.plot(x,yupper,'.r')
-    >>> plt.plot(x,ylower,'.b')
+    x: numpy array
+        input vector
+    delta: double
+       double from(0,1); peakfinding threshold (using peakdet, see peakdet help)
+    sg_order: integer
+        Savitzy_Golay order
+    interp_kind: string
+        interpolation kind ('slinear','quadratic','cubic'), from interp1
+    edge_pts: double
+        fraction of input vector that will be considered as edge; this avoid edge effects in the filter
     '''
-
     #----------------------------------------------------   
     # pre-allocate space for results
     nx = np.size(x)
@@ -321,24 +289,70 @@ def envPeak(x, delta=0.2, window_size = 0.05, sg_order = 0, interp_kind='slinear
     #lower
     iLocs_min = np.append([0],iPk_min)
     iLocs_min = np.append(iLocs_min,nx-1)
-
+    #calculate upper and lower min to remove edge effects
+    maxtab = x[iLocs_max]
+    mintab = x[iLocs_min]
+    upper_meanL = np.mean(maxtab[0:int(len(maxtab)*edge_pts)])
+    upper_meanR = np.mean(maxtab[-int(len(maxtab)*edge_pts):-1])
+    lower_meanL = np.mean(mintab[0:int(len(mintab)*edge_pts)])
+    lower_meanR = np.mean(mintab[-int(len(mintab)*edge_pts):-1])
+    #-------------------------------------------------
+    tol_upperL = 0.5*np.std(maxtab[0:int(len(maxtab)*edge_pts)])
+    tol_upperR = 0.5*np.std(maxtab[-int(len(maxtab)*edge_pts):-1])
+    tol_lowerL = 0.5*np.std(mintab[0:int(len(mintab)*edge_pts)])
+    tol_lowerR = 0.5*np.std(mintab[-int(len(mintab)*edge_pts):-1])
+    #print((tol_upper,tol_lower))
+    #----- for maxtab
+    iteratorL = 0
+    iteratorR = len(maxtab)-1
+    #print('iterator L,R(maxtab)=',(iteratorL,iteratorR))
+    difL = np.abs(maxtab[iteratorL]-upper_meanL)
+    difR = np.abs(maxtab[iteratorR]-upper_meanR)
+    #print((difL,difR))
+    while difL > tol_upperL:
+        difL = np.abs(maxtab[iteratorL]-upper_meanL)
+        iteratorL = iteratorL+1
+    while difR > tol_upperR:
+        difR = np.abs(maxtab[iteratorR]-upper_meanR)
+        iteratorR = iteratorR-1
+    #update vetors
+    print('iterator L,R(mintab)=',(iteratorL,len(maxtab)-iteratorR))
+    maxtab[0:iteratorL] = maxtab[iteratorL+1]
+    maxtab[-(len(maxtab)-iteratorR):len(maxtab)] = maxtab[-(len(maxtab)-iteratorR)-1]
+    #----- for mintab
+    iteratorL = 0
+    iteratorR = len(mintab)-1
+    #print('iterator L,R(maxtab)=',(iteratorL,iteratorR))
+    difL = np.abs(mintab[iteratorL]-lower_meanL)
+    difR = np.abs(mintab[iteratorR]-lower_meanR)
+    while difL > tol_lowerL:
+        difL = np.abs(mintab[iteratorL]-lower_meanL)
+        iteratorL = iteratorL+1
+    while difR > tol_lowerR:
+        difR = np.abs(mintab[iteratorR]-lower_meanR)
+        iteratorR = iteratorR-1
+    #update vetors
+    #print('iterator L,R(mintab)=',(iteratorL,len(mintab)-iteratorR))
+    mintab[0:iteratorL] = mintab[iteratorL+1]
+    mintab[-(len(mintab)-iteratorR):len(mintab)] = mintab[-(len(mintab)-iteratorR)-1]
     # smoothly connect the maxima via a spline.
     #------------------
-    nsmooth = ceil(len(x[iLocs_max])*window_size/ 2.) * 2+1
-    xs = savitzky_golay(x[iLocs_max],nsmooth,order=sg_order)
+    #print((len(maxtab),len(iLocs_max)))
+    nsmooth = ceil(len(maxtab)*smooth / 2.) * 2+1
+    xs = savitzky_golay(maxtab,nsmooth,order=sg_order)
     yupper_ifunc = interp1d(iLocs_max,xs,kind=interp_kind)
     yupper = yupper_ifunc(range(0,nx))   
-    #yupper = savitzky_golay(yupper,nsmooth,order=sg_order)
     #------------------
-    nsmooth = ceil(len(x[iLocs_min])*windows_size/ 2.) * 2+1
-    xs = savitzky_golay(x[iLocs_min],nsmooth,order=sg_order)
-    ylower_ifunc = interp1d(iLocs_min,x[iLocs_min],kind=interp_kind)
-    ylower = ylower_ifunc(range(0,nx)) 
-    ylower = savitzky_golay(ylower,nsmooth,order=sg_order)
+    nsmooth = ceil(len(mintab)*smooth / 2.) * 2+1
+    xs = savitzky_golay(mintab,nsmooth,order=sg_order)
+    ylower_ifunc = interp1d(iLocs_min,xs,kind=interp_kind)
+    ylower = ylower_ifunc(range(0,nx))
     #-----------------
     return ylower,yupper
-
-
-
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+#****************************************************************************
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 
 

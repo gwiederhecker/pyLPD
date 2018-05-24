@@ -5,7 +5,7 @@ import codecs
 from setuptools import setup
 
 
-version = '0.0.1.5'
+version = '0.0.1.6'
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -36,7 +36,7 @@ setup(
     package_dir={'pyLPD': 'pyLPD'},
     ext_modules=[],
     provides=['pyLPD'],
-    install_requires=['numpy', 'pyvisa', 'pandas', 'scipy'] + (['future']
+    install_requires=['numpy', 'pyvisa', 'pandas', 'numba', 'scipy'] + (['future']
                                   if sys.version_info.major < 3 else []),
     setup_requires=setup_requires,
     tests_require=[],

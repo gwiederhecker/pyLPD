@@ -22,7 +22,7 @@ import sys
 import mock
 import shlex
 MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.pyplot', 'scipy.interpolate',
-        'scipy.io','math']
+        'scipy.io','math','numba']
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
@@ -42,11 +42,11 @@ sys.path.insert(0, os.path.abspath('../pyLPD'))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.napoleon']
+extensions = ['sphinx.ext.autodoc','sphinx.ext.napoleon']
+#    'sphinx.ext.mathjax',
+#    'sphinx.ext.viewcode',
+#    'sphinx.ext.githubpages',
+#    ]
 
 # Napoleon settings
 napoleon_google_docstring = False

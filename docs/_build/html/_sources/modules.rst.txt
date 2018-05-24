@@ -5,4 +5,3 @@ pyLPD
    :maxdepth: 4
 
    pyLPD
-   setup
